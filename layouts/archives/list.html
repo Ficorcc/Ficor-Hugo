@@ -2,7 +2,7 @@
 {{ .Content }}
 
 <div class="posts">
-  {{ $pages := where .Site.RegularPages "Type" "posts" }}
+  {{ $pages := .Site.Pages | where "Kind" "page" }}
   {{ $grouped := $pages.GroupByDate "2006" }}
   
   {{ range $grouped }}

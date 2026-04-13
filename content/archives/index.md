@@ -1,10 +1,10 @@
 +++
-title = "归档"
+title = "Archives"
 date = 2026-03-21T00:00:00+08:00
 draft = false
 +++
 
-# 文章归档
+# Archives
 
 这里是所有文章的归档列表，按年份分组展示。
 

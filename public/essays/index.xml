@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Essays on Lawpan</title>
+    <link>http://localhost:1321/essays/</link>
+    <description>Recent content in Essays on Lawpan</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 26 Mar 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1321/essays/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>短文1</title>
+      <link>http://localhost:1321/essays/%E7%9F%AD%E6%96%871/</link>
+      <pubDate>Thu, 26 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1321/essays/%E7%9F%AD%E6%96%871/</guid>
+      <description>&lt;p&gt;这是第一篇短文，用于测试滚动效果。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>短文2</title>
+      <link>http://localhost:1321/essays/%E7%9F%AD%E6%96%872/</link>
+      <pubDate>Wed, 25 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1321/essays/%E7%9F%AD%E6%96%872/</guid>
+      <description>&lt;p&gt;这是第二篇短文，展示滚动播出的效果。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>短文3</title>
+      <link>http://localhost:1321/essays/%E7%9F%AD%E6%96%873/</link>
+      <pubDate>Tue, 24 Mar 2026 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1321/essays/%E7%9F%AD%E6%96%873/</guid>
+      <description>&lt;p&gt;这是第三篇短文，用于测试滚动播出功能。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
