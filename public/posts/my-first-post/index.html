@@ -8,22 +8,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE = edge, chrome = 1">
 
 <title>
-  Page Not Found @ Lawpan
+  My First Post @ Lawpan
 </title>
 
 <meta name="description" content="">
 
 <meta name="generator" content="Hugo 0.157.0">
 
-<link rel="canonical" href="http://localhost:1313/memos/">
+<link rel="canonical" href="http://localhost:1313/posts/my-first-post/">
 
 <meta property="og:type" content="website">
 
 <meta property="og:locale" content="en">
-<meta property="og:title" content='Page Not Found @ Lawpan'>
+<meta property="og:title" content='My First Post @ Lawpan'>
 <meta property="og:site_name" content="Lawpan">
 <meta property="og:description" content="">
-<meta property="og:url" content="http://localhost:1313/memos/">
+<meta property="og:url" content="http://localhost:1313/posts/my-first-post/">
 
 <meta property="og:image" content="">
 <meta name="twitter:image" content="">
@@ -58,6 +58,20 @@
 </style>
 
 
+
+
+
+<style>
+  @font-face {
+    font-family: 'Fira Code';
+    src: url('/assets/fonts/FiraCode-Regular.a6ce59520b90e15d7062ffef214f94c8add5a4085c0bbb1683602ef227a4d1fe.woff2') format('woff2'),
+    url('/assets/fonts/FiraCode-Regular.e4b5a20d572b7f718d64c884e4e48cb7e45303ab50722011469ee2e1964bff6d.woff') format('woff');
+  }
+  
+  p {
+    text-indent: 2em;
+  }
+</style>
 
 
 
@@ -119,138 +133,44 @@
 
   <main>
     
-<h1>Memos</h1>
-<p>我的微语动态</p>
-<hr>
 
-<div class="memos-container">
-    <div class="memos-loading">加载中...</div>
+
+
+
+<h1>My First Post</h1>
+
+
+
+
+<div class="article-tag">
+  
+  <span class="article-author">By&nbsp;</span>
+  
+  
+  <time datetime="2026-03-21T07:53:56">Posted on 2026-03-21</time>
+  
+  
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMemos();
-    startAutoRefresh();
-});
 
-function startAutoRefresh() {
-    var refreshInterval = 30000;
-    
-    setInterval(function() {
-        fetchMemos();
-    }, refreshInterval);
-}
 
-function fetchMemos() {
-    var url = 'https://memos.ficor.net/api/v1/memos?_=' + Date.now();
-    var headers = new Headers();
-    headers.append('Authorization', 'Bearer memos_pat_eNE8zsoihpvnvSKTNBQ7oz8FTBTRao01');
-    
-    fetch(url, { 
-        headers: headers,
-        cache: 'no-cache'
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.memos) {
-                updateMemos(data.memos);
-            }
-        })
-        .catch(error => {
-            console.error('Failed to fetch memos:', error);
-            showError();
-        });
-}
 
-function updateMemos(memos) {
-    var container = document.querySelector('.memos-container');
-    if (!container) return;
-    
-    var newHtml = '';
-    memos.forEach(function(memo) {
-        var content = memo.content.replace(/#(\w+)/g, '<span class="memos-tag">#$1</span>');
-        var createTime = new Date(memo.createTime);
-        var dateStr = createTime.toISOString().split('T')[0];
-        var timeStr = createTime.toTimeString().slice(0, 5);
-        
-        newHtml += `
-            <div class="memos-item">
-                <div class="memos-content">${content}</div>
-                <div class="memos-time">${dateStr} ${timeStr}</div>
-            </div>
-        `;
-    });
-    
-    container.innerHTML = newHtml;
-}
 
-function showError() {
-    var container = document.querySelector('.memos-container');
-    if (!container) return;
-    container.innerHTML = '<div class="memos-item"><div class="memos-content">Failed to load memos</div></div>';
-}
-</script>
 
-<style>
-.memos-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem 0;
-}
 
-.memos-loading {
-    color: var(--color-primary);
-    padding: 1rem;
-    text-align: center;
-}
-
-.memos-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid var(--color-line);
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
-
-.memos-item:last-child {
-    border-bottom: none;
-}
-
-.memos-content {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--color-text);
-    flex: 1;
-    min-width: 0;
-}
-
-.memos-tag {
-    color: #22c55e;
-    font-weight: 500;
-}
-
-.memos-time {
-    font-size: 0.875rem;
-    color: var(--color-primary);
-    flex-shrink: 0;
-    white-space: nowrap;
-    padding-top: 0.25rem;
-}
-</style>
 
   </main>
 
   
+<div class="backtotop">
+    <div id="back-to-top" onclick="scrollToTop()">Back To Top</div>
+</div>
+
 
   <footer class="footer">
     <span>&copy; 2026 . All rights reserved.</span>
     <span>Powered by <a href="https://gohugo.io">Hugo</a> & <a href="https://github.com/khitezza/vortisil/">Vortisil</a>.</span>
 </footer>
-  
-  
-  <script src="/assets/js/site-theme-toggle.js"></script>
-  
-  
-  </body>
+  <script src="/assets/js/theme-toggle-gen.js"></script></body>
 
 </html>

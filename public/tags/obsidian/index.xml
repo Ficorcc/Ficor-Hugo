@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Obsidian on Lawpan</title>
-    <link>http://localhost:1322/tags/obsidian/</link>
+    <link>http://localhost:1313/tags/obsidian/</link>
     <description>Recent content in Obsidian on Lawpan</description>
     <generator>Hugo</generator>
     <language>en</language>
     <lastBuildDate>Thu, 15 Jan 2026 15:50:18 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1322/tags/obsidian/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/obsidian/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>坚果云 x Obsidian 官方同步插件</title>
-      <link>http://localhost:1322/posts/%E5%9D%9A%E6%9E%9C%E4%BA%91-x-obsidian-%E5%AE%98%E6%96%B9%E5%90%8C%E6%AD%A5%E6%8F%92%E4%BB%B6/</link>
+      <link>http://localhost:1313/posts/%E5%9D%9A%E6%9E%9C%E4%BA%91-x-obsidian-%E5%AE%98%E6%96%B9%E5%90%8C%E6%AD%A5%E6%8F%92%E4%BB%B6/</link>
       <pubDate>Thu, 15 Jan 2026 15:50:18 +0000</pubDate>
-      <guid>http://localhost:1322/posts/%E5%9D%9A%E6%9E%9C%E4%BA%91-x-obsidian-%E5%AE%98%E6%96%B9%E5%90%8C%E6%AD%A5%E6%8F%92%E4%BB%B6/</guid>
+      <guid>http://localhost:1313/posts/%E5%9D%9A%E6%9E%9C%E4%BA%91-x-obsidian-%E5%AE%98%E6%96%B9%E5%90%8C%E6%AD%A5%E6%8F%92%E4%BB%B6/</guid>
       <description>&lt;p&gt;新的一年已经过去半个月了，好久没更新了，也是因为最近一直没有什么值得记录的。&lt;/p&gt;&#xA;&lt;p&gt;最近一直在折腾手头的工具，也一直在准备写一篇”技术“类的文章，分享一下。只是一直没行动。&lt;/p&gt;&#xA;&lt;p&gt;在使用了这么多笔记软件后，最终选择了用Obsidian来写博客。写完用插件直接同步网站，太方便了。也不用再专门在手机上下载App了。随时有想法或者想记录的内容，随时在手机上就可以记录加发布了。挺方便的，因为也不是随时都能有时间坐在电脑前，一本正经的打开网站编辑器，开始敲键盘。因为刚开始使用，好多功能和扩展都不熟悉，暂时只是敲字，后期优化还要在网站上继续。加入图片，链接之类的”锦上添花“的元素。&lt;/p&gt;&#xA;&lt;p&gt;现阶段只有两个插件，一个Wordpress，还有一个同步的插件坚果云 x Obsidian 官方同步插件Nutstore Sync。反正免费版够用了。官方的同步还要花点钱，暂时需求也不大。这里给博友们安利一下这个插件，个人感觉还是很好用的，全平台实时同步，在哪里都可以摸起设备就继续。&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;打开 Obsidian，&lt;code&gt;设置&lt;/code&gt; &amp;gt; &lt;code&gt;第三方插件&lt;/code&gt; &amp;gt; &lt;code&gt;社区插件市场&lt;/code&gt;。&lt;/li&gt;&#xA;&lt;li&gt;搜索 &lt;strong&gt;&lt;code&gt;Nutstore Sync&lt;/code&gt;&lt;/strong&gt;，点击安装并启用。&lt;/li&gt;&#xA;&lt;li&gt;在插件设置里登录方式选择单点登录，会弹出坚果云窗口，注册登录就好了。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968847c865a5.webp&#34; alt=&#34;点击登录&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;跳转登录成功后检查连接，显示连接成功，就搞定了！&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968847c86615.webp&#34; alt=&#34;检查链接&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;可以设置目录，冲突标记，实时同步，自己设置就OK了。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968847c8996a.webp&#34; alt=&#34;设置选项&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;第一次同步，PC端点击左侧同步按钮→确认同步，移动端点击编辑界面右下角“☰”→开始同步→确认同步。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/696886e26c133.webp&#34; alt=&#34;PC端同步按钮&#34;&gt;&#xA;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968a3b105e21.webp&#34; alt=&#34;手机端同步按钮&#34;&gt;&#xA;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968a3b10628a.webp&#34; alt=&#34;手机端同步&#34;&gt;&#xA;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/69688534291e5.webp&#34; alt=&#34;同步确认&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;箭头是PC端和手机端的同步按钮，每次写完自己同步，也可以点击按钮手动同步，还是很方便的。&lt;/p&gt;&#xA;&lt;p&gt;全部文章写完后，点完同步，再点击发布到Wordpress就好了。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968847c897bb.webp&#34; alt=&#34;Wordpress登录&#34;&gt;&#xA;&lt;img src=&#34;https://img.ficor.net/uploads/2026/01/6968847c89856.webp&#34; alt=&#34;Wordpress设置&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;这就是我现在写博客的全部流程，很好的打字体验，Obsidian支持Markdown，虽然我还不是很熟悉Markdown语言，但是打完之后生成的文件可以直接复制到静态博客里，也是很方便的。&lt;/p&gt;&#xA;&lt;p&gt;最近也一直在折腾静态博客，后面慢慢再记录和分享吧。上面的介绍大概已经躺在我Obsidian仓库里快一个月了。这里就当我水一篇吧，哈哈。谁还没有懒的时候。&lt;/p&gt;</description>
     </item>
   </channel>
