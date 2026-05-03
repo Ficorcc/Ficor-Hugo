@@ -37,7 +37,13 @@
 
 
 
+
+
+
 <link rel="stylesheet" href="/assets/scss/main.min.css">
+
+
+
 
 <script>
   (function () {
@@ -138,13 +144,24 @@
 </section>
 
 <style>
+.essays {
+    display: flex;
+    flex-direction: column;
+}
+
 .essays-scroll {
-    border: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0 0 0;
+    border: 1px solid var(--color-line);
     border-radius: 0.5rem;
     padding: 1rem;
 }
 
 .essays-item {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
     padding: 0.5rem 0;
 }
 
@@ -152,11 +169,17 @@
     border-bottom: 1px solid var(--color-line);
 }
 
+.essays-item a {
+    width: 100%;
+}
+
 .memos-content-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
+    width: 100%;
+    line-height: 1.8;
 }
 
 .memos-text-container {
@@ -170,7 +193,7 @@
     color: var(--color-text);
     white-space: nowrap;
     display: inline-block;
-    animation: scroll-text 10s linear infinite;
+    animation: scroll-text 12s linear infinite;
 }
 
 .memos-text:hover {
@@ -179,7 +202,13 @@
 
 @keyframes scroll-text {
     0% {
-        transform: translateX(100%);
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(0);
+    }
+    80% {
+        transform: translateX(-100%);
     }
     100% {
         transform: translateX(-100%);
@@ -187,10 +216,12 @@
 }
 
 .memos-time {
-    font-size: 0.75rem;
-    color: var(--color-primary);
+    opacity: 0.7;
+    font-size: 1rem;
+    color: var(--color-text);
     white-space: nowrap;
     flex-shrink: 0;
+    font-weight: bold;
 }
 
 .memos-loading {
@@ -290,23 +321,20 @@ function showError() {
         </div>
         
         <div class="posts-item">
+            <div class="posts-date">2026-03-21</div>
+            <div class="posts-title">
+                <a href="/posts/my-first-post/">My First Post</a>
+                
+                <p></p>
+            </div>
+        </div>
+        
+        <div class="posts-item">
             <div class="posts-date">2026-02-21</div>
             <div class="posts-title">
                 <a href="/posts/%E6%98%8E%E6%B0%B4%E5%8F%A4%E5%9F%8E/">明水古城</a>
                 
                 <p>提起想法 大年初四，在家实在是没有什么事情，想着还有几天就开课了，开课后就更没时间出去玩了。计划着出去玩一玩，开始找游玩目的地，搜各种介绍和攻略。用了各种AI，看了安徽皖南的碧山村，皖南今年是真火，人太多了。还想着去曲阜看三孔、逛尼山，还有...</p>
-            </div>
-        </div>
-        
-        <div class="posts-item">
-            <div class="posts-date">2026-02-19</div>
-            <div class="posts-title">
-                <a href="/posts/%E6%96%B0%E6%98%A5%E4%BD%B3%E8%8A%82/">新春佳节</a>
-                
-                <p>大年初三了，还是祝大家新春吉祥，万事顺心。
-突然萌生了一个想法，可能也是年龄大了怕自己忘了，想把现在自己在农村知道的、了解的年俗场景记录一下。本文随时更新，记录一下春节的点点滴滴。
-除夕
-除夕之前无非就是备年货，串门，走亲戚，别无他事。早几...</p>
             </div>
         </div>
         
