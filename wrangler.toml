@@ -1,20 +1,11 @@
-name = "Build"
+name = "lawpan-blog"
+
+[pages_build_output_dir]
+publish_dir = "public"
 
 [build]
 command = "./build.sh"
-publish_dir = "public"
 
 [build.environment]
 HUGO_VERSION = "0.143.1"
 HUGO_ENV = "production"
-
-[build.upload]
-exclude = [
-  "node_modules",
-  ".git",
-  ".gitignore",
-  "README.md",
-]
-
-[build.preview]
-command = "hugo --minify --baseURL $CF_PAGES_URL"

@@ -5,10 +5,10 @@ echo "=== Starting build process ==="
 echo "Current directory: $(pwd)"
 echo "Environment: CF_PAGES_URL=$CF_PAGES_URL"
 
-echo "Ignoring submodule checks (this project includes theme inline)..."
-git config --global advice.submoduleFetch false 2>/dev/null || true
-git submodule deinit --all 2>/dev/null || true
-rm -rf .git/modules 2>/dev/null || true
+echo "Ignoring submodule checks (theme files are in themes/vortisil)..."
+
+echo "Checking theme directory..."
+ls -la themes/vortisil/
 
 echo "Cleaning previous build artifacts..."
 rm -rf public resources .hugo_build.lock
