@@ -1,0 +1,243 @@
+{{- define "main" -}}
+<h1>Feeds</h1>
+<p>聚合订阅动态</p>
+<hr>
+
+<div class="feeds-container" id="feeds-container">
+    <div class="feeds-loading">加载中...</div>
+</div>
+
+<script>
+(function() {
+    var container = document.getElementById('feeds-container');
+    var mockFeeds = [
+        { id: 'mock_1', content: '今天天气真好，阳光明媚，适合出去走走！', time: new Date(Date.now() - 2*60*60*1000).toISOString(), type: '分享', url: null, author: '张三' },
+        { id: 'mock_2', content: '刚刚完成了一个重要的项目，感觉很有成就感！', time: new Date(Date.now() - 5*60*60*1000).toISOString(), type: '工作', url: null, author: '李四' },
+        { id: 'mock_3', content: '周末去了一趟郊外，空气清新，风景如画。', time: new Date(Date.now() - 24*60*60*1000).toISOString(), type: '生活', url: null, author: '王五' },
+        { id: 'mock_4', content: '读完了一本很棒的书，推荐给大家！', time: new Date(Date.now() - 48*60*60*1000).toISOString(), type: '心情', url: null, author: '赵六' }
+    ];
+    
+    function renderFeeds(feeds) {
+        if (!feeds || feeds.length === 0) {
+            container.innerHTML = '<div class="feeds-empty">暂无动态</div>';
+            return;
+        }
+
+        var html = '';
+        for (var i = 0; i < feeds.length; i++) {
+            var feed = feeds[i];
+            var content = (feed.content || '').replace(/<[^>]*>/g, '');
+            if (content.length > 200) content = content.substring(0, 200) + '...';
+            var timeStr = formatTime(feed.time);
+            var linkHtml = feed.url ? '<a href="' + feed.url + '" target="_blank" class="feeds-link">查看详情 →</a>' : '';
+
+            html += '<article class="feeds-item">' +
+                '<div class="feeds-header">' +
+                '<span class="feeds-author">' + feed.author + '</span>' +
+                '<span class="feeds-type">' + feed.type + '</span>' +
+                '<span class="feeds-time">' + timeStr + '</span>' +
+                '</div>' +
+                '<div class="feeds-content">' + content + '</div>' +
+                linkHtml +
+                '</article>';
+        }
+
+        container.innerHTML = html;
+    }
+
+    function formatTime(timeStr) {
+        try {
+            var feedTime = new Date(timeStr);
+            var now = new Date();
+            var diff = now - feedTime;
+
+            if (isNaN(diff)) return timeStr;
+            if (diff < 60000) return '刚刚';
+            if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+            if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+            
+            return (feedTime.getMonth() + 1) + '月' + feedTime.getDate() + '日';
+        } catch(e) {
+            return timeStr;
+        }
+    }
+
+    function processFeeds(allFeeds) {
+        var seen = {};
+        var uniqueFeeds = [];
+        
+        for (var i = 0; i < allFeeds.length; i++) {
+            var feed = allFeeds[i];
+            var key = ((feed.content || '').replace(/<[^>]*>/g, '')).substring(0, 80).toLowerCase();
+            if (key && !seen[key]) {
+                seen[key] = true;
+                uniqueFeeds.push(feed);
+            }
+        }
+
+        uniqueFeeds.sort(function(a, b) {
+            return new Date(b.time) - new Date(a.time);
+        });
+
+        renderFeeds(uniqueFeeds.slice(0, 30));
+    }
+
+    function fetchFeeds() {
+        var apis = [
+            { 
+                url: 'https://lilog.cn/is/index.php?action=get_user_feeds&uid=54008&limit=30&token=2bd4eea157becfd45baf299494394392', 
+                name: 'API1',
+                parse: function(data) {
+                    var items = data.data || [];
+                    return items.map(function(item) {
+                        var content = item.title || '';
+                        if (item.summary) content += '\n\n' + item.summary;
+                        return {
+                            id: item.id || item.link || Date.now(),
+                            content: content.trim(),
+                            time: item.pubDate || item.publish_time || new Date().toISOString(),
+                            type: item.category || '订阅',
+                            url: item.link || null,
+                            author: data.user ? data.user.nickname : '朋友'
+                        };
+                    });
+                }
+            },
+            { 
+                url: 'https://jh.3v.hk/api.php?action=get_all_items&uid=16&token=741afb1d210656544af0490d0824ca6e&li', 
+                name: 'API2',
+                parse: function(data) {
+                    var items = data.data || [];
+                    return items.map(function(item) {
+                        var content = item.title || '';
+                        if (item.description) {
+                            var desc = item.description.replace(/<[^>]*>/g, '').trim();
+                            if (desc && desc.length < 500) content += '\n\n' + desc;
+                        }
+                        return {
+                            id: item.id || item.link || Date.now(),
+                            content: content.trim(),
+                            time: item.publish_time || new Date().toISOString(),
+                            type: '订阅',
+                            url: item.link || null,
+                            author: '朋友'
+                        };
+                    });
+                }
+            }
+        ];
+
+        var allFeeds = [];
+        var completed = 0;
+
+        function checkComplete() {
+            completed++;
+            if (completed >= apis.length) {
+                processFeeds(allFeeds);
+            }
+        }
+
+        apis.forEach(function(api) {
+            fetch(api.url, { cache: 'no-cache' })
+                .then(function(response) {
+                    if (!response.ok) {
+                        console.log(api.name + ' error: ' + response.status);
+                        checkComplete();
+                        return null;
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    if (data) {
+                        console.log(api.name + ' data received');
+                        var items = api.parse(data);
+                        console.log(api.name + ' parsed ' + items.length + ' items');
+                        allFeeds = allFeeds.concat(items);
+                    }
+                    checkComplete();
+                })
+                .catch(function(error) {
+                    console.log(api.name + ' failed:', error);
+                    checkComplete();
+                });
+        });
+    }
+
+    renderFeeds(mockFeeds);
+    setTimeout(fetchFeeds, 100);
+})();
+</script>
+
+<style>
+.feeds-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.feeds-loading {
+    color: var(--color-primary);
+    padding: 1rem;
+    text-align: center;
+}
+
+.feeds-empty {
+    color: var(--color-text);
+    opacity: 0.6;
+    padding: 2rem;
+    text-align: center;
+}
+
+.feeds-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.feeds-item:last-child {
+    border-bottom: none;
+}
+
+.feeds-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.feeds-author {
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.feeds-type {
+    padding: 0.125rem 0.5rem;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.7rem;
+    border-radius: 0.25rem;
+}
+
+.feeds-time {
+    margin-left: auto;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    opacity: 0.7;
+}
+
+.feeds-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    white-space: pre-line;
+}
+
+.feeds-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-primary);
+}
+</style>
+{{- end -}}

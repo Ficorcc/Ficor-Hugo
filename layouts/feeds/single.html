@@ -1,0 +1,279 @@
+{{- define "main" -}}
+<h1>Feeds</h1>
+<p>聚合订阅动态</p>
+<hr>
+
+{{- $api1 := "https://lilog.cn/is/index.php?action=get_user_feeds&uid=54008&limit=30&token=2bd4eea157becfd45baf299494394392" -}}
+{{- $api2 := "https://jh.3v.hk/api.php?action=get_all_items&uid=16&token=741afb1d210656544af0490d0824ca6e&li" -}}
+
+<div class="feeds-container" id="feeds-container">
+    <div class="feeds-loading">加载中...</div>
+</div>
+
+<script>
+(function() {
+    var container = document.getElementById('feeds-container');
+    var apis = [
+        { 
+            url: {{ $api1 }},
+            name: 'API1',
+            parse: function(data) {
+                var items = data.data || [];
+                return items.map(function(item) {
+                    var siteName = item.source_title || item.feed_title || item.author || '';
+                    if (!siteName && item.link) {
+                        try {
+                            siteName = new URL(item.link).hostname.replace('www.', '');
+                        } catch(e) {}
+                    }
+                    var summary = item.summary || item.description || '';
+                    return {
+                        id: item.id || item.link || Date.now(),
+                        title: item.title || '无标题',
+                        site: siteName || '朋友',
+                        summary: summary,
+                        time: item.date || item.timestamp ? new Date((parseInt(item.timestamp) || 0) * 1000).toISOString() : new Date().toISOString(),
+                        link: item.link || null
+                    };
+                });
+            }
+        },
+        { 
+            url: {{ $api2 }},
+            name: 'API2',
+            parse: function(data) {
+                var items = data.data || [];
+                return items.map(function(item) {
+                    var siteName = item.feed_title || item.feed || item.author || '';
+                    if (!siteName && item.link) {
+                        try {
+                            siteName = new URL(item.link).hostname.replace('www.', '');
+                        } catch(e) {}
+                    }
+                    var summary = item.description || item.summary || '';
+                    return {
+                        id: item.id || item.link || Date.now(),
+                        title: item.title || '无标题',
+                        site: siteName || '朋友',
+                        summary: summary,
+                        time: item.pub_date || item.date || item.time || new Date().toISOString(),
+                        link: item.link || null
+                    };
+                });
+            }
+        }
+    ];
+
+    var allFeeds = [];
+    var completed = 0;
+
+    function stripHtml(html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return tmp.textContent || tmp.innerText || '';
+    }
+
+    function truncateText(text, maxLength) {
+        if (!text) return '';
+        text = stripHtml(text);
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    }
+
+    function renderFeeds(feeds) {
+        if (!feeds || feeds.length === 0) {
+            container.innerHTML = '<div class="feeds-empty">暂无动态</div>';
+            return;
+        }
+
+        var seen = {};
+        var uniqueFeeds = [];
+        for (var i = 0; i < feeds.length; i++) {
+            var feed = feeds[i];
+            var key = (feed.title || '').substring(0, 50).toLowerCase();
+            if (key && !seen[key]) {
+                seen[key] = true;
+                uniqueFeeds.push(feed);
+            }
+        }
+
+        uniqueFeeds.sort(function(a, b) {
+            return new Date(b.time) - new Date(a.time);
+        });
+
+        var html = '';
+        for (var j = 0; j < Math.min(uniqueFeeds.length, 30); j++) {
+            var f = uniqueFeeds[j];
+            var domain = '';
+            if (f.link) {
+                try {
+                    domain = new URL(f.link).hostname.replace('www.', '');
+                } catch(e) {}
+            }
+            var timeStr = formatTime(f.time);
+            var summary = truncateText(f.summary, 100);
+            var summaryHtml = summary ? '<div class="feeds-summary">' + summary + '</div>' : '';
+            html += '<article class="feeds-item">' +
+                '<div class="feeds-source">' +
+                '<a href="' + f.link + '" target="_blank" class="feeds-site">' + f.site + '</a>' +
+                ' · ' +
+                '<a href="' + f.link + '" target="_blank" class="feeds-url">' + domain + '</a>' +
+                '</div>' +
+                '<div class="feeds-time">' + timeStr + '</div>' +
+                '<div class="feeds-title-row">' +
+                '<span class="feeds-title">' + f.title + '</span>' +
+                '<a href="' + f.link + '" target="_blank" class="feeds-arrow"> →</a>' +
+                '</div>' +
+                summaryHtml +
+                '</article>';
+        }
+
+        container.innerHTML = html;
+    }
+
+    function formatTime(timeStr) {
+        try {
+            var feedTime = new Date(timeStr);
+            if (isNaN(feedTime.getTime())) return timeStr;
+            var year = feedTime.getFullYear();
+            var month = String(feedTime.getMonth() + 1).padStart(2, '0');
+            var day = String(feedTime.getDate()).padStart(2, '0');
+            var hours = String(feedTime.getHours()).padStart(2, '0');
+            var minutes = String(feedTime.getMinutes()).padStart(2, '0');
+            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes;
+        } catch(e) {
+            return timeStr;
+        }
+    }
+
+    function checkComplete() {
+        completed++;
+        if (completed >= apis.length) {
+            renderFeeds(allFeeds);
+        }
+    }
+
+    apis.forEach(function(api) {
+        fetch(api.url, { cache: 'no-cache' })
+            .then(function(response) {
+                if (!response.ok) {
+                    console.log(api.name + ' error: ' + response.status);
+                    checkComplete();
+                    return null;
+                }
+                return response.json();
+            })
+            .then(function(data) {
+                if (data) {
+                    console.log(api.name + ' data received');
+                    var items = api.parse(data);
+                    console.log(api.name + ' parsed ' + items.length + ' items');
+                    allFeeds = allFeeds.concat(items);
+                }
+                checkComplete();
+            })
+            .catch(function(error) {
+                console.log(api.name + ' failed:', error);
+                checkComplete();
+            });
+    });
+})();
+</script>
+
+<style>
+.feeds-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+
+.feeds-loading {
+    color: var(--color-primary);
+    padding: 1rem;
+    text-align: center;
+}
+
+.feeds-empty {
+    color: var(--color-text);
+    opacity: 0.6;
+    padding: 2rem;
+    text-align: center;
+}
+
+.feeds-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-line);
+}
+
+.feeds-item:last-child {
+    border-bottom: none;
+}
+
+.feeds-source {
+    font-size: 0.96rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.feeds-site {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.96rem;
+}
+
+.feeds-site:hover {
+    text-decoration: underline;
+}
+
+.feeds-url {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.96rem;
+}
+
+.feeds-url:hover {
+    text-decoration: underline;
+}
+
+.feeds-time {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    opacity: 0.7;
+    margin-bottom: 0.5rem;
+}
+
+.feeds-title-row {
+    display: flex;
+    align-items: baseline;
+}
+
+.feeds-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.feeds-arrow {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    margin-left: 0.25rem;
+}
+
+.feeds-arrow:hover {
+    text-decoration: underline;
+}
+
+.feeds-summary {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+}
+</style>
+{{- end -}}

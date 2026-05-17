@@ -1,0 +1,56 @@
+{{ define "main" }}
+{{ .Content }}
+
+<div class="posts">
+  {{ $pages := where .Site.RegularPages "Type" "posts" }}
+  <p>Total posts: {{ len $pages }}</p>
+  
+  {{ if gt (len $pages) 0 }}
+    {{ range $pages.ByDate.Reverse }}
+    <div class="posts-item">
+      <div class="posts-date">{{ .Date | dateFormat "2006-01-02" }}</div>
+      <div class="posts-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+      {{ if .Params.tags }}
+      <div class="posts-tags">
+        {{ range .Params.tags }}
+        <a href="{{ "tags/" | relLangURL }}{{ . | urlize }}" class="tag-item">{{ . }}</a>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  {{ else }}
+    <p>暂无文章</p>
+  {{ end }}
+</div>
+
+<div class="categories-tags">
+  <h2>文章分类</h2>
+  <div class="categories-list">
+    {{ $categories := .Site.Taxonomies.categories }}
+    {{ if gt (len $categories) 0 }}
+      {{ range $name, $taxonomy := $categories }}
+        <a href="{{ "categories/" | relLangURL }}{{ $name | urlize }}" class="category-item">
+          {{ $name }} ({{ len $taxonomy }})
+        </a>
+      {{ end }}
+    {{ else }}
+      <p>暂无分类</p>
+    {{ end }}
+  </div>
+
+  <h2>文章标签</h2>
+  <div class="tags-list">
+    {{ $tags := .Site.Taxonomies.tags }}
+    {{ if gt (len $tags) 0 }}
+      {{ range $name, $taxonomy := $tags }}
+        <a href="{{ "tags/" | relLangURL }}{{ $name | urlize }}" class="tag-item">
+          {{ $name }} ({{ len $taxonomy }})
+        </a>
+      {{ end }}
+    {{ else }}
+      <p>暂无标签</p>
+    {{ end }}
+  </div>
+</div>
+{{ end }}

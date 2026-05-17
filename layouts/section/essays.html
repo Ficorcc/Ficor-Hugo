@@ -1,0 +1,20 @@
+{{ define "main" }}
+
+<section class="essays-list" id="essays-list">
+
+    <div class="section-title">短文列表</div>
+
+    <div class="essays-list-container">
+        {{ $essays_pages := where site.RegularPages "Type" "essays" }}
+        {{ range $essays_pages }}
+        <div class="essays-list-item">
+            <div class="essays-list-date">{{ .Date | dateFormat "2006-01-02" }}</div>
+            <div class="essays-list-title">{{ .Title }}</div>
+            <div class="essays-list-content">{{ .Content | plainify }}</div>
+        </div>
+        {{ end }}
+    </div>
+
+</section>
+
+{{ end }}

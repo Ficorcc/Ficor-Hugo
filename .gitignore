@@ -1,0 +1,19 @@
+# Hugo
+public/
+resources/
+.hugo_build.lock
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
