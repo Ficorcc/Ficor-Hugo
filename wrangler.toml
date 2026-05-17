@@ -1,11 +1,5 @@
 name = "lawpan-blog"
-
-[pages_build_output_dir]
-publish_dir = "public"
+pages_build_output_dir = "public"
 
 [build]
 command = "./build.sh"
-
-[build.environment]
-HUGO_VERSION = "0.143.1"
-HUGO_ENV = "production"
